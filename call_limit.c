@@ -217,10 +217,12 @@ __dialog_created(struct dlg_cell *dlg, int type, struct dlg_cb_params *_params)
 	LM_WARN("__dialog_created.");
 
 
-    	if (request->REQ_METHOD != METHOD_INVITE)
+    	if (request->REQ_METHOD != METHOD_INVITE) {
+        	LM_WARN("cannot __dialog__created with method invite\n");
         	return;
+	}
 
-	if ((request->msg_flags & FL_USE_CALL_LIMIT) == 0)
+	if ((request->msg_flags & FL_USE_CALL_LIMIT) == 0) 
 		return;
 
     	if (dlg_api.register_dlgcb(dlg, DLGCB_RESPONSE_FWDED, __dialog_replies, NULL, NULL) != 0)
